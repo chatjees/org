@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChatJEEs</title>
+  <meta name="description" content="AI tutor for JEE Main and Advanced: doubt solving, concepts, practice and study plans.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">∑</span> ChatJEEs</div>
+    <div class="controls">
+      <label>Subject
+        <select id="subject">
+          {% for key, name in subjects.items() %}
+          <option value="{{ key }}" {% if key == 'general' %}selected{% endif %}>{{ 'All subjects' if key == 'general' else name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button id="new-chat" type="button" class="ghost">New chat</button>
+    </div>
+  </header>
+
+  <nav class="modes" id="modes" role="tablist">
+    <button data-mode="doubt" class="active" role="tab">🧩 Solve a doubt</button>
+    <button data-mode="concept" role="tab">💡 Explain a concept</button>
+    <button data-mode="practice" role="tab">📝 Practice</button>
+    <button data-mode="plan" role="tab">🗓️ Study plan</button>
+  </nav>
+
+  <main id="chat" class="chat" aria-live="polite">
+    <section class="welcome" id="welcome">
+      <h1>Your JEE study partner</h1>
+      <p>Type a question or upload a photo of a problem. Solutions come step by step, with the maths rendered properly.</p>
+      <div class="examples">
+        <button class="example">A block of mass 2 kg slides down a 30° incline with μ = 0.2. Find its acceleration.</button>
+        <button class="example">Explain hybridisation of the carbon atoms in CH₂=C=CH₂.</button>
+        <button class="example">Evaluate $\int_0^{\pi/2} \frac{\sin x}{\sin x + \cos x}\,dx$</button>
+      </div>
+    </section>
+  </main>
+
+  <form id="composer" class="composer">
+    <div id="preview" class="preview" hidden>
+      <img id="preview-img" alt="Attached question">
+      <button type="button" id="remove-img" aria-label="Remove image">✕</button>
+    </div>
+    <div class="row">
+      <label class="attach" title="Attach a photo of the question">
+        📷<input type="file" id="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      </label>
+      <textarea id="input" rows="1" placeholder="Ask a JEE question…  (Shift+Enter for a new line)"></textarea>
+      <button id="send" type="submit">Send</button>
+    </div>
+    <p class="hint">ChatJEEs can make mistakes. Check important results against NCERT or your teacher.</p>
+  </form>
+</body>
+</html>
