@@ -48,6 +48,19 @@ static/style.css       Styles
 tests/test_app.py      Offline tests (Claude client is mocked)
 ```
 
+## Deploy
+
+**Render (easiest):** push this repo to GitHub, then on render.com choose *New → Blueprint*, select the repo, and paste your `ANTHROPIC_API_KEY` when asked. `render.yaml` does the rest.
+
+**Any Docker host** (Railway, Fly.io, Google Cloud Run, an AWS/Azure VM):
+
+```bash
+docker build -t chatjees .
+docker run -p 8000:8000 -e ANTHROPIC_API_KEY=sk-ant-... chatjees
+```
+
+Every question is billed to your API key. Before sharing the URL publicly, add a login and per-user rate limits.
+
 ## Tests
 
 ```bash
