@@ -1,0 +1,12 @@
+# One-click deploy on Render (https://render.com): New > Blueprint > pick this repo.
+services:
+  - type: web
+    name: chatjees
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false   # Render asks you to paste the key; it is never stored in the repo
+      - key: CHATJEES_EFFORT
+        value: high
